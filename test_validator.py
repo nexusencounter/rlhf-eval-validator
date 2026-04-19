@@ -26,3 +26,10 @@ def test_validate_record_catches_broken_winner_code():
     }
     errors = validate_record(bad, min_rationale_words=5)
     assert any("invalid" in e for e in errors)
+
+def test_extract_multiple_blocks():
+    from code_extractors import extract_blocks_by_language
+    md = "```py\nx = 1\n```\n```bash\necho ok\n```"
+    g = extract_blocks_by_language(md)
+    assert len(g["python"]) == 1
+    assert len(g["bash"]) == 1
