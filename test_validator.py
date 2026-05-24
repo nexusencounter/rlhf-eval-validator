@@ -33,3 +33,10 @@ def test_extract_multiple_blocks():
     g = extract_blocks_by_language(md)
     assert len(g["python"]) == 1
     assert len(g["bash"]) == 1
+
+def test_ast_auditor_flags_eval_and_pass():
+    from ast_auditor import audit_python_ast
+    warnings = audit_python_ast("import pickle\ndef foo():\n    pass\nresult = eval('2 + 2')\n")
+    assert any("pass" in w for w in warnings)
+    assert any("eval" in w for w in warnings)
+    assert any("pickle" in w for w in warnings)
