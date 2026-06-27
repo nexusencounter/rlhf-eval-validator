@@ -40,3 +40,10 @@ def test_ast_auditor_flags_eval_and_pass():
     assert any("pass" in w for w in warnings)
     assert any("eval" in w for w in warnings)
     assert any("pickle" in w for w in warnings)
+
+def test_validate_unified_diff():
+    from diff_checker import validate_unified_diff
+    valid_patch = "--- a/app.py\n+++ b/app.py\n@@ -1,2 +1,2 @@\n-x = 1\n+x = 2\n"
+    ok, issues = validate_unified_diff(valid_patch)
+    assert ok is True
+    assert issues == []
