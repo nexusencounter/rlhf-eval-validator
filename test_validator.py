@@ -47,3 +47,8 @@ def test_validate_unified_diff():
     ok, issues = validate_unified_diff(valid_patch)
     assert ok is True
     assert issues == []
+
+def test_compute_rationale_metrics():
+    from rubric_metrics import compute_rationale_metrics
+    m = compute_rationale_metrics("Model A handles runtime edge case and avoids TypeError in test suite.")
+    assert m["technical_term_count"] >= 3
